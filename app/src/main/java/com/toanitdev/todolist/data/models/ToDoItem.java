@@ -9,6 +9,13 @@ public class ToDoItem {
   String content;
   Date timeToAlarm;
 
+  public ToDoItem() {
+  }
+
+  public ToDoItem(String title, String content) {
+    this.title = title;
+    this.content = content;
+  }
 
   public String getTitle() {
     return title;

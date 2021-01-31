@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <data>
+    <import type="com.toanitdev.todolist.utils.TextUtils"/>
+    <variable
+      name="item"
+      type="com.toanitdev.todolist.data.models.ToDoItem" />
+    <variable
+      name="navigator"
+      type="com.toanitdev.todolist.ui.main.MainNavigator" />
+  </data>
+
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textColor="@color/colorPrimaryDark"
+      android:text='@{TextUtils.isEmpty(item.title.toString()) ? "" : item.title}' />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textColor="@color/colorPrimaryDark"
+      android:text='@{ TextUtils.isEmpty(item.content.toString()) ? "" : item.content }' />
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="1px"
+      android:background="@color/colorPrimaryDark"/>
+  </LinearLayout>
+</layout>

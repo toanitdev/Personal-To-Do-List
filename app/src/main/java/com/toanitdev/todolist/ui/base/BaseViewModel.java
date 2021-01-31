@@ -4,6 +4,16 @@ import androidx.lifecycle.ViewModel;
 
 public class BaseViewModel<T> extends ViewModel {
 
+  T navigator;
+
+
+  public T getNavigator(){
+    return navigator;
+  }
+
+  public void setNavigation(T navigation){
+    this.navigator = navigation;
+  }
 
 
 }
