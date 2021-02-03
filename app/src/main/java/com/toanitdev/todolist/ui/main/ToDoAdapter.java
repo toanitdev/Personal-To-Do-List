@@ -42,7 +42,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoViewHolder> {
   }
   @Override
   public int getItemCount() {
-    return data.size();
+    return data !=null ?  data.size() : 0;
   }
 
 

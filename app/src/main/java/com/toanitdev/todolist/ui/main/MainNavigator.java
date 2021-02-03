@@ -8,4 +8,6 @@ public interface MainNavigator {
   void handleError(Throwable throwable);
 
   void openDialog(String msg);
+
+  void openAddItemDialog();
 }

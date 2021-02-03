@@ -11,6 +11,7 @@ import com.toanitdev.todolist.data.models.ToDoItem;
 import com.toanitdev.todolist.databinding.ActivityMainBinding;
 import com.toanitdev.todolist.ui.base.BaseActivity;
 import com.toanitdev.todolist.ui.base.BaseViewModel;
+import com.toanitdev.todolist.ui.dialog.MyAlertDialog;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator {
 
@@ -51,6 +52,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
   @Override
   public void openDialog(String msg) {
-    new AlertDialog.Builder(this).setMessage("Clicked : " + msg).show();
+    //new AlertDialog.Builder(this).setMessage("Clicked : " + msg).show();
+    //MyAlertDialog.newInstance("My dialog").show(getSupportFragmentManager(),"Dialog");
+    AddItemToDoDialog.newInstance().show(getSupportFragmentManager(),"add_dialog");
+  }
+
+  @Override
+  public void openAddItemDialog() {
+    new AlertDialog.Builder(this).setMessage("Open Dialog Add").show();
   }
 }

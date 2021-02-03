@@ -19,11 +19,18 @@ public class MainViewModel extends BaseViewModel<MainNavigator> implements IOnCl
 
   MutableLiveData<List<ToDoItem>> toDoItems;
   MutableLiveData<ToDoAdapter> toDoAdapter;
+  Context context;
 
   public MainViewModel(Context context) {
     this.toDoItems = new MutableLiveData<>();
     this.toDoAdapter = new MutableLiveData<>();
+    this.context = context;
+    initViewModel();
+  }
+
+  private void initViewModel() {
     fetchToDoList(context);
+
   }
 
   public void fetchToDoList(Context context) {
@@ -55,8 +62,13 @@ public class MainViewModel extends BaseViewModel<MainNavigator> implements IOnCl
   }
 
   private List<ToDoItem> getToDoListFromLocal(Context context) {
-    DataManager dataManager = new DataManager(context);
-    //return dataManager.loadToDoList();
+    /*DataManager dataManager = new DataManager(context);
+    return dataManager.loadToDoList();*/
+    return  getTemplateData();
+  }
+
+
+  public List<ToDoItem> getTemplateData(){
     List<ToDoItem> toDoItems = new ArrayList<>();
 
     toDoItems.add(new ToDoItem("t1","c1"));
