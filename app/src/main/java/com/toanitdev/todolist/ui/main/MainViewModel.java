@@ -29,16 +29,20 @@ public class MainViewModel extends BaseViewModel<MainNavigator> implements IOnCl
   }
 
   private void initViewModel() {
-    fetchToDoList(context);
+    fetchToDoList();
 
   }
 
-  public void fetchToDoList(Context context) {
+  public void fetchToDoList() {
     toDoItems.setValue(getToDoListFromLocal(context));
     ToDoAdapter adapter = new ToDoAdapter(this);
     adapter.setData(toDoItems.getValue());
     toDoAdapter.setValue(adapter);
 
+  }
+
+  public void refeshToDoList(){
+    toDoAdapter.getValue().setData(getToDoListFromLocal(context));
   }
 
   public void addToDoList(ToDoItem newItem) {
@@ -62,9 +66,9 @@ public class MainViewModel extends BaseViewModel<MainNavigator> implements IOnCl
   }
 
   private List<ToDoItem> getToDoListFromLocal(Context context) {
-    /*DataManager dataManager = new DataManager(context);
-    return dataManager.loadToDoList();*/
-    return  getTemplateData();
+    DataManager dataManager = new DataManager(context);
+    return dataManager.loadToDoList();
+    //return  getTemplateData();
   }
 
 

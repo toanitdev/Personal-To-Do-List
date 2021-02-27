@@ -1,6 +1,8 @@
 package com.toanitdev.todolist.ui.main;
 
-public interface MainNavigator {
+import com.toanitdev.todolist.ui.base.BaseNavigator;
+
+public interface MainNavigator extends BaseNavigator {
 
 
   void goToDetail();
@@ -10,4 +12,6 @@ public interface MainNavigator {
   void openDialog(String msg);
 
   void openAddItemDialog();
+
+  void refreshDataList();
 }
