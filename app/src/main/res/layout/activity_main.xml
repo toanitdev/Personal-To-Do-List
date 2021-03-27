@@ -7,6 +7,8 @@
     <variable
       name="viewmodel"
       type="com.toanitdev.todolist.ui.main.MainViewModel" />
+    <import type="com.toanitdev.todolist.utils.Helper"/>
+    <import type="android.view.View"/>
   </data>
   <LinearLayout
     android:layout_width="match_parent"
@@ -28,11 +30,24 @@
         android:onClick="@{() -> viewmodel.navigator.openAddItemDialog()}"
         />
     </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/rvToDo"
+    <FrameLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      app:toDoAdapter="@{viewmodel.toDoAdapter}"/>
+      android:layout_height="match_parent">
+      <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvToDo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:toDoAdapter="@{viewmodel.toDoAdapter}"/>
+
+        <TextView
+          android:id="@+id/tvNoTask"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:text="@string/no_task_list"
+          android:textSize="24sp"
+          android:visibility="@{viewmodel.isEmpty ?  View.VISIBLE : View.GONE}"/>
+    </FrameLayout>
+
   </LinearLayout>
 </layout>

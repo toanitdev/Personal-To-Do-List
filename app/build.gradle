@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debug2 {
+            storeFile file('E:\\KeyStore\\key-store.jks')
+            storePassword '123456'
+            keyAlias 'debug2'
+            keyPassword '123456'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
@@ -15,9 +23,25 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+
+            minifyEnabled false
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
         release {
             minifyEnabled false
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug2 {
+            signingConfig signingConfigs.debug2
+            applicationIdSuffix '.debug2'
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
         }
     }
 
@@ -28,6 +52,8 @@ android {
 
 
 dependencies {
+    //crashing
+    implementation 'cat.ereza:customactivityoncrash:2.3.0'
 
     // GSON
     implementation 'com.google.code.gson:gson:2.8.6'

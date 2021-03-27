@@ -6,4 +6,5 @@
   <string name="content">Content</string>
   <string name="alarm">Alarm</string>
   <string name="change_date">Change Date</string>
+  <string name="no_task_list">No task list.</string>
 </resources>

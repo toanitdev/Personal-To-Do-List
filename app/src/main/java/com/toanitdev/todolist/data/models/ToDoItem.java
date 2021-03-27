@@ -1,15 +1,25 @@
 package com.toanitdev.todolist.data.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ToDoItem {
+public class ToDoItem implements Serializable {
 
-
+  int id;
   String title;
   String content;
   Date timeToAlarm;
 
   public ToDoItem() {
+  }
+
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   public ToDoItem(String title, String content) {
@@ -40,4 +50,5 @@ public class ToDoItem {
   public void setTimeToAlarm(Date timeToAlarm) {
     this.timeToAlarm = timeToAlarm;
   }
+
 }

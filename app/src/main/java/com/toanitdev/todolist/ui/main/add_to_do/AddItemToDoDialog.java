@@ -34,8 +34,9 @@ public class AddItemToDoDialog extends BaseBottomSheetDiagloFragment implements 
 
   AddToDoViewModel  addToDoViewModel;
   static List<ToDoItem> data;
-
+  Calendar calendar;
   DialogAddToDoBinding binding;
+  boolean isAlarm;
   public static AddItemToDoDialog newInstance(MainNavigator navigator, List<ToDoItem> list){
     navi =  navigator;
     data =  list;
@@ -96,7 +97,7 @@ public class AddItemToDoDialog extends BaseBottomSheetDiagloFragment implements 
 
   @Override
   public void onClickAdd() {
-   addToDoViewModel.addToDo();
+   addToDoViewModel.addToDo(calendar,isAlarm);
   }
 
   @Override
@@ -110,7 +111,12 @@ public class AddItemToDoDialog extends BaseBottomSheetDiagloFragment implements 
     new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
       @Override
       public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        binding.tvTime.setText(hourOfDay + ":" + minute);
+        binding.tvTime.setText(String.format("%02d:%02d",hourOfDay,minute));
+        calendar =  Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
+        calendar.set(Calendar.MINUTE,minute);
+        calendar.set(Calendar.SECOND,0);
+        isAlarm =true;
       }
     }, Calendar.getInstance().getTime().getHours(),Calendar.getInstance().getTime().getMinutes(),true).show();
   }

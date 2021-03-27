@@ -1,6 +1,9 @@
 package com.toanitdev.todolist.ui.main.add_to_do;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 
@@ -14,29 +17,35 @@ import androidx.lifecycle.Observer;
 import com.toanitdev.todolist.data.DataManager;
 import com.toanitdev.todolist.data.models.ToDoItem;
 import com.toanitdev.todolist.ui.base.BaseViewModel;
+import com.toanitdev.todolist.utils.alarm.AlarmBroadcastReceiver;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
-public class AddToDoViewModel extends BaseViewModel<AddToDoNavigator>{
+public class AddToDoViewModel extends BaseViewModel<AddToDoNavigator> {
 
 
   List<ToDoItem> toDoItemList;
   Context context;
   DataManager dataManager;
 
-  MutableLiveData<String> title = new MutableLiveData() ;
-  MutableLiveData<String> content = new MutableLiveData() ;
-  ObservableBoolean isAlarm = new ObservableBoolean() ;
+  MutableLiveData<String> title = new MutableLiveData();
+  MutableLiveData<String> content = new MutableLiveData();
+  ObservableBoolean isAlarm = new ObservableBoolean();
 
   public AddToDoViewModel(Context context, List<ToDoItem> list) {
     this.context = context;
     this.toDoItemList = list;
-    if(toDoItemList == null){
+    if (toDoItemList == null) {
       toDoItemList = new ArrayList<>();
     }
 
-    this.dataManager =  new DataManager(this.context);
+    this.dataManager = new DataManager(this.context);
   }
 
   public MutableLiveData<String> getTitle() {
@@ -63,15 +72,49 @@ public class AddToDoViewModel extends BaseViewModel<AddToDoNavigator>{
     this.isAlarm = isAlarm;
   }
 
-  void addToDo(){
+  void addToDo(Calendar calendar, boolean isAlarm) {
     ToDoItem item = new ToDoItem();
 
 
     item.setTitle(title.getValue());
     item.setContent(content.getValue());
-    toDoItemList.add(item);
+    item.setId(new Random().nextInt(Integer.MAX_VALUE));
 
+
+
+
+
+
+    if (isAlarm) {
+      if (calendar.before(Calendar.getInstance()))
+        calendar.add(Calendar.DATE, 1);
+
+      item.setTimeToAlarm(calendar.getTime());
+
+      AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+      Intent intent = new Intent(context.getApplicationContext(), AlarmBroadcastReceiver.class);
+
+      ByteArrayOutputStream bos = new ByteArrayOutputStream();
+      ObjectOutputStream out = null;
+
+      try {
+        out = new ObjectOutputStream(bos);
+        out.writeObject(item);
+        out.flush();
+
+        byte[] byteArray =  bos.toByteArray();
+        intent.putExtra("data",byteArray);
+
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), item.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+      alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+    }
+
+    toDoItemList.add(item);
     dataManager.saveToDoList(toDoItemList);
+    
     getNavigator().addToDoSuccess();
   }
 

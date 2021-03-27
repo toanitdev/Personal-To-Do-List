@@ -22,7 +22,13 @@ public class ToDoViewHolder extends RecyclerView.ViewHolder {
     itemView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        listener.OnItemClick(v,getAdapterPosition());
+        listener.onItemClick(v,getAdapterPosition());
+      }
+    });
+    itemToDoBinding.ivDel.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        listener.onDelClick(v, getAdapterPosition());
       }
     });
   }

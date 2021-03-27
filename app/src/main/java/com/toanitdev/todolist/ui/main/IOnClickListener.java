@@ -4,6 +4,8 @@ import android.view.View;
 
 public interface IOnClickListener {
 
-  void OnItemClick(View view , int position);
+  void onItemClick(View view , int position);
+
+  void onDelClick(View view , int position);
 
 }

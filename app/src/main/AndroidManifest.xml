@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.toanitdev.todolist">
+  <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+  <uses-permission android:name="android.permission.VIBRATE" />
+  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+  <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+  <uses-permission android:name="android.permission.WAKE_LOCK" />
+  <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 
   <application
+    android:name=".App"
     android:allowBackup="true"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
+    <activity android:name=".ui.main.ringtone.RingtoneActivity"
+
+      android:parentActivityName=".ui.main.MainActivity"
+      android:excludeFromRecents="true"
+      android:showOnLockScreen="true"
+      android:showWhenLocked="true"
+      android:turnScreenOn="true"
+      android:showForAllUsers="true"
+      />
     <activity android:name=".ui.main.MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -16,6 +33,16 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+    <receiver android:name=".utils.alarm.AlarmBroadcastReceiver"
+      android:exported="true"
+      android:enabled="true">
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED" />
+      </intent-filter>
+    </receiver>
+    <service android:name=".utils.alarm.AlarmService"
+      android:enabled="true"
+      android:exported="true"/>
   </application>
 
 </manifest>

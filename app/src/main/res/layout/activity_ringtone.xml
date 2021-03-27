@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:context=".ui.main.ringtone.RingtoneActivity">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+      android:id="@+id/tvTime"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="09:00"
+      android:textSize="36sp"
+      app:layout_constraintBottom_toTopOf="@id/tvTitle"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+      android:id="@+id/tvTitle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Working Time"
+      app:layout_constraintBottom_toTopOf="@id/tvContent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/tvTime" />
+
+    <TextView
+      android:id="@+id/tvContent"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Time to work"
+      app:layout_constraintBottom_toTopOf="@id/btnStopAlarm"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <Button
+      android:id="@+id/btnStopAlarm"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Stop Alarm"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
