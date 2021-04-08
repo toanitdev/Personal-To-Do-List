@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextWatcher;
 
@@ -37,6 +38,7 @@ public class AddToDoViewModel extends BaseViewModel<AddToDoNavigator> {
   MutableLiveData<String> title = new MutableLiveData();
   MutableLiveData<String> content = new MutableLiveData();
   ObservableBoolean isAlarm = new ObservableBoolean();
+  ObservableBoolean isRepeat = new ObservableBoolean();
 
   public AddToDoViewModel(Context context, List<ToDoItem> list) {
     this.context = context;
@@ -72,6 +74,14 @@ public class AddToDoViewModel extends BaseViewModel<AddToDoNavigator> {
     this.isAlarm = isAlarm;
   }
 
+  public ObservableBoolean getIsRepeat() {
+    return isRepeat;
+  }
+
+  public void setIsRepeat(ObservableBoolean isRepeat) {
+    this.isRepeat = isRepeat;
+  }
+
   void addToDo(Calendar calendar, boolean isAlarm) {
     ToDoItem item = new ToDoItem();
 
@@ -94,6 +104,8 @@ public class AddToDoViewModel extends BaseViewModel<AddToDoNavigator> {
       AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
       Intent intent = new Intent(context.getApplicationContext(), AlarmBroadcastReceiver.class);
 
+
+      // END - Note 0001 chuyển obj sang byteArray
       ByteArrayOutputStream bos = new ByteArrayOutputStream();
       ObjectOutputStream out = null;
 
@@ -108,13 +120,21 @@ public class AddToDoViewModel extends BaseViewModel<AddToDoNavigator> {
       } catch (IOException e) {
         e.printStackTrace();
       }
+      // END - Note 0001 chuyển obj sang byteArray
+
       PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), item.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
-      alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+      if(isRepeat.get()){
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY, pendingIntent);
+
+      }else {
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+      }
     }
 
     toDoItemList.add(item);
     dataManager.saveToDoList(toDoItemList);
-    
+
     getNavigator().addToDoSuccess();
   }
 

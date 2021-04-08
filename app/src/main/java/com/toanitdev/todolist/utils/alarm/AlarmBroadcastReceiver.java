@@ -48,13 +48,14 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     }
 
     //toDoItem = (ToDoItem) intent.getBundleExtra("data").getSerializable("data");
+
     if(!Helper.isAppRunning(context,context.getPackageName())){
       startActivity(context);
     }else {
 
       RingtoneActivity.startMe(context.getApplicationContext(),toDoItem);
     }
-    showNotificationOnService(context);
+    showNotificationOnService(context,toDoItem);
 
 
   }
@@ -62,7 +63,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
   void startActivity(Context context) {
     Intent intent = new Intent(context, RingtoneActivity.class);
     if (toDoItem != null) {
-      intent.putExtra("to_do_item", toDoItem);
+      intent.putExtra("to_do_item", toDoItem.getId());
     }
     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP |
         Intent.FLAG_ACTIVITY_NEW_TASK |
@@ -70,13 +71,16 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     context.startActivity(intent);
   }
 
-  void showNotificationOnService(Context context) {
+  void showNotificationOnService(Context context,ToDoItem toDoItem) {
     Intent intentService = new Intent(context, AlarmService.class);
+    intentService.putExtra("to_do_item",toDoItem);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
       context.startForegroundService(intentService);
+
     } else {
       context.startService(intentService);
     }
+    //showNotificationOnBroadcastReceiver(context);
   }
 
 

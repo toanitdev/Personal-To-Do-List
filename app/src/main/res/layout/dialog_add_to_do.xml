@@ -3,13 +3,16 @@
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <data>
+
     <variable
       name="addToDoViewModel"
       type="com.toanitdev.todolist.ui.main.add_to_do.AddToDoViewModel" />
+
     <variable
       name="iOnClick"
       type="com.toanitdev.todolist.ui.main.add_to_do.IAddToDoListener" />
-    <import type="android.view.View"/>
+
+    <import type="android.view.View" />
   </data>
 
   <LinearLayout
@@ -53,11 +56,10 @@
           android:layout_marginHorizontal="8dp"
           android:layout_marginVertical="4dp"
           android:background="@drawable/bg_edit_text_white_stoke"
-          android:textCursorDrawable="@drawable/bg_cursor_accent"
           android:hint="@string/title"
           android:singleLine="true"
           android:text="@={addToDoViewModel.title}"
-         />
+          android:textCursorDrawable="@drawable/bg_cursor_accent" />
 
         <EditText
           android:layout_width="match_parent"
@@ -67,59 +69,120 @@
           android:layout_marginTop="16dp"
           android:background="@drawable/bg_edit_text_white_stoke"
           android:hint="@string/content"
-          android:textCursorDrawable="@drawable/bg_cursor_accent"
-          android:text="@={addToDoViewModel.content}" />
+          android:text="@={addToDoViewModel.content}"
+          android:textCursorDrawable="@drawable/bg_cursor_accent" />
+
         <CheckBox
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="@string/alarm"
-          android:checked="@={addToDoViewModel.isAlarm}"/>
+          android:checked="@={addToDoViewModel.isAlarm}"
+          android:text="@string/alarm" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
+          android:layout_height="wrap_content"
           android:visibility="@{addToDoViewModel.isAlarm ? View.VISIBLE : View.GONE}">
+
           <LinearLayout
             android:id="@+id/ll_date_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:paddingHorizontal="@dimen/normal_padding"
             app:layout_constraintEnd_toStartOf="@id/btn_change_date"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:paddingHorizontal="@dimen/normal_padding">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btn_change_date">
+
             <TextView
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:text="Date"/>
+              android:text="Date" />
+
             <TextView
               android:id="@+id/tv_time"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:text="Time"/>
+              android:text="Time" />
           </LinearLayout>
 
           <TextView
             android:id="@+id/btn_change_date"
+            style="@style/ButtonSecondary"
             android:layout_width="0dp"
             android:layout_height="60dp"
-            android:text="@string/change_date"
-            style="@style/ButtonSecondary"
             android:onClick="@{()->iOnClick.changeTime()}"
+            android:text="@string/change_date"
             app:layout_constraintBottom_toBottomOf="@id/ll_date_time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/ll_date_time" />
+
+          <CheckBox
+            android:id="@+id/ck_repeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Repeat"
+            android:checked="@={addToDoViewModel.isRepeat}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_change_date">
+
+          </CheckBox>
+
+          <LinearLayout
+            android:id="@+id/ll_weekly"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ck_repeat"
+            android:visibility="@{addToDoViewModel.isRepeat ? View.VISIBLE : View.GONE}">
+
+            <CheckBox
+              android:id="@+id/ck_mon"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Mon"/>
+            <CheckBox
+              android:id="@+id/ck_tue"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Tue"/>
+            <CheckBox
+              android:id="@+id/ck_wed"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Wed"/>
+            <CheckBox
+              android:id="@+id/ck_thu"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Thu"/>
+            <CheckBox
+              android:id="@+id/ck_fri"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Fri"/>
+            <CheckBox
+              android:id="@+id/ck_sat"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Sat"/>
+            <CheckBox
+              android:id="@+id/ck_sun"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Sun"/>
+          </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.button.MaterialButton
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:background="@drawable/bg_btn"
           android:layout_marginTop="16dp"
+          android:background="@drawable/bg_btn"
           android:foreground="?selectableItemBackground"
-          android:text="@string/add"
-          android:onClick="@{() -> iOnClick.onClickAdd()}"/>
+          android:onClick="@{() -> iOnClick.onClickAdd()}"
+          android:text="@string/add" />
 
       </LinearLayout>
     </ScrollView>
