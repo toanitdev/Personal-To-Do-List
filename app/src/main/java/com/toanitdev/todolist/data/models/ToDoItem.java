@@ -5,14 +5,40 @@ import java.util.Date;
 
 public class ToDoItem implements Serializable {
 
+  public final static String MONDAY = "1";
+  public final static String TUESDAY = "2";
+  public final static String WEDNESDAY = "3";
+  public final static String THURSDAY = "4";
+  public final static String FRIDAY = "5";
+  public final static String SATURDAY = "6";
+  public final static String SUNDAY = "0";
+
   int id;
   String title;
   String content;
   Date timeToAlarm;
+  String[] day;
+  boolean isRepeat;
 
   public ToDoItem() {
   }
 
+
+  public boolean isRepeat() {
+    return isRepeat;
+  }
+
+  public void setRepeat(boolean repeat) {
+    isRepeat = repeat;
+  }
+
+  public String[] getDay() {
+    return day;
+  }
+
+  public void setDay(String[] day) {
+    this.day = day;
+  }
 
   public int getId() {
     return id;

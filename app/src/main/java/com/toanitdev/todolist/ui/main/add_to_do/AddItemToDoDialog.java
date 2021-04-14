@@ -97,7 +97,30 @@ public class AddItemToDoDialog extends BaseBottomSheetDiagloFragment implements 
 
   @Override
   public void onClickAdd() {
-   addToDoViewModel.addToDo(calendar,isAlarm);
+    String[] dayToAlarm  = {"","","","","","",""};
+    if(binding.ckMon.isChecked()){
+      dayToAlarm[0] = ToDoItem.MONDAY;
+    }
+    if(binding.ckTue.isChecked()){
+      dayToAlarm[1] = ToDoItem.TUESDAY;
+    }
+    if(binding.ckWed.isChecked()){
+      dayToAlarm[2] = ToDoItem.WEDNESDAY;
+    }
+    if(binding.ckThu.isChecked()){
+      dayToAlarm[3] = ToDoItem.THURSDAY;
+    }
+    if(binding.ckFri.isChecked()){
+      dayToAlarm[4] = ToDoItem.FRIDAY;
+    }
+    if(binding.ckSat.isChecked()){
+      dayToAlarm[5] = ToDoItem.SATURDAY;
+    }
+    if(binding.ckSun.isChecked()){
+      dayToAlarm[6] = ToDoItem.SUNDAY;
+    }
+
+    addToDoViewModel.addToDo(calendar, isAlarm, dayToAlarm);
   }
 
   @Override

@@ -82,13 +82,15 @@ public class AddToDoViewModel extends BaseViewModel<AddToDoNavigator> {
     this.isRepeat = isRepeat;
   }
 
-  void addToDo(Calendar calendar, boolean isAlarm) {
+  void addToDo(Calendar calendar, boolean isAlarm, String[] dayToAlarm) {
     ToDoItem item = new ToDoItem();
 
 
     item.setTitle(title.getValue());
     item.setContent(content.getValue());
     item.setId(new Random().nextInt(Integer.MAX_VALUE));
+    item.setDay(dayToAlarm);
+    item.setRepeat(this.isRepeat.get());
 
 
 
